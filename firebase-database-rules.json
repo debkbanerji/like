@@ -9,7 +9,10 @@
                 ".read": "auth != null",
                 ".indexOn": "datetime",
                 "$id": {
-                    ".write": "auth !== null && (!data.exists() || data.child('poster-uid').val() === auth.uid)"
+                    ".write": "auth !== null && (!data.exists() || data.child('poster-uid').val() === auth.uid)",
+                    "likes": {
+                        ".write": "auth !== null"
+                    }
                 }
             }
         },

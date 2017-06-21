@@ -18,16 +18,21 @@ export class TextPostsComponent implements OnInit, OnDestroy {
     // private numPosts: number;
 
     private PAGE_SIZE = 10;
+    private feedLocation: string;
     private limit: BehaviorSubject<number> = new BehaviorSubject<number>(this.PAGE_SIZE); // import 'rxjs/BehaviorSubject';
     public postsArray: FirebaseListObservable<any>;
     private postsArraySubscription: Subscription;
     private lastKey: String;
     public canLoadMoreData: boolean;
     private lastKeySubscription: Subscription;
+    private postSubscription: Subscription;
 
     public submitText: String;
     private userDisplayName: String;
     private userUID: String;
+    private userLikesSubscription: Subscription;
+    private userLikesObject: FirebaseObjectObservable<any>;
+    private userLikes: number;
     // private displayNameObject: FirebaseObjectObservable<any>;
     // private userDataSubscription: Subscription;
 
@@ -42,7 +47,7 @@ export class TextPostsComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.submitText = '';
-        const feedLocation = '/text-posts';
+        this.feedLocation = '/text-posts';
         // this.numPostsObject = this.db.object(feedLocation + '/num-posts', {preserveSnapshot: true});
         // this.numPostsSubscription = this.numPostsObject.subscribe(snapshot => {
         //     let val = snapshot.val();
@@ -53,7 +58,7 @@ export class TextPostsComponent implements OnInit, OnDestroy {
         // });
 
         // asyncronously find the last item in the list
-        this.lastKeySubscription = this.db.list(feedLocation + '/posts', {
+        this.lastKeySubscription = this.db.list(this.feedLocation + '/posts', {
             query: {
                 orderByChild: 'datetime',
                 limitToFirst: 1
@@ -67,8 +72,13 @@ export class TextPostsComponent implements OnInit, OnDestroy {
             }
         });
 
+        this.userLikesObject = this.db.object('/likes/' + this.userUID);
+        this.userLikesSubscription = this.userLikesObject.subscribe((data) => {
+            this.userLikes = data.$value;
+        });
 
-        this.postsArray = this.db.list(feedLocation + '/posts', {
+
+        this.postsArray = this.db.list(this.feedLocation + '/posts', {
             query: {
                 orderByChild: 'datetime',
                 limitToLast: this.limit // Start at this.PAGE_SIZE newest items
@@ -140,7 +150,8 @@ export class TextPostsComponent implements OnInit, OnDestroy {
                     'text': form.value.text,
                     'poster-display-name': this.userDisplayName,
                     'poster-uid': this.userUID,
-                    'datetime': currDate.getTime() // For internationalization purposes
+                    'datetime': currDate.getTime(), // For internationalization purposes
+                    'likes': 0
                 });
             form.resetForm();
             this.submitText = 'Successfully made post';
@@ -155,11 +166,47 @@ export class TextPostsComponent implements OnInit, OnDestroy {
         // this.numPostsObject.set(this.numPosts - 1);
     }
 
+    private likePost(key, posterUID) {
+        // this.postsArray.remove(key);
+        // const postObject = this.db.object(this.feedLocation + '/posts/' + key + '/likes');
+        // this.postSubscription = postObject.subscribe((data) => {
+        //     postObject.set(data.$value + 1);
+        //     this.db.object('/likes/' + this.userUID).$ref.transaction(userData => {
+        //         return userData - 1;
+        //     });
+        //     this.db.object('/likes/' + posterUID).$ref.transaction(otherData => {
+        //         return otherData + 1;
+        //     });
+        // });
+        if (this.userLikes > 0) {
+            const otherPostObject = this.db.object(this.feedLocation + '/posts/' + key + '/likes');
+            otherPostObject.$ref.transaction(postData => {
+                return postData + 1;
+            });
+            this.db.object('/likes/' + posterUID).$ref.transaction(otherData => {
+                return otherData + 1;
+            });
+            this.db.object('/likes/' + this.userUID).$ref.transaction(userData => {
+                return userData - 1;
+            });
+        }
+    }
+
     ngOnDestroy() {
         // this.userDataSubscription.unsubscribe();
         // this.numPostsSubscription.unsubscribe();
-        this.lastKeySubscription.unsubscribe();
-        this.postsArraySubscription.unsubscribe();
+        if (this.lastKeySubscription) {
+            this.lastKeySubscription.unsubscribe();
+        }
+        if (this.postsArraySubscription) {
+            this.postsArraySubscription.unsubscribe();
+        }
+        if (this.postSubscription) {
+            this.postSubscription.unsubscribe();
+        }
+        if (this.userLikesSubscription) {
+            this.userLikesSubscription.unsubscribe();
+        }
         // window.onscroll = () => {
         //     // Clearing onscroll implementation (may not be necessary)
         // };

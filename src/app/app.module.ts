@@ -26,7 +26,7 @@ import {ChatComponent} from './chat/chat.component';
 const routes: Routes = [ // Array of all routes - modify when adding routes //TODO: Replace
     {path: '', component: HomePageComponent}, // Default route
     {path: 'login', component: LoginPageComponent},
-    {path: 'text-posts', component: TextPostsComponent},
+    {path: 'posts', component: TextPostsComponent},
     {path: 'profile', component: SettingsComponent},
     {path: 'friends', component: FriendsComponent},
     {path: 'add-friends', component: AddFriendsComponent},

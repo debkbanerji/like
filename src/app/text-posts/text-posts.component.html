@@ -6,6 +6,7 @@
                 <h1>Text Posts</h1>
                 <!--<h3>Total number of posts: {{ (numPostsObject | async)?.$value }}</h3>-->
                 <!--<h3>Total number of posts: {{ numPosts }}</h3>-->
+                <h3>Likes: {{ (userLikesObject | async)?.$value }} {{userLikes}}</h3>
             </div>
             <div class="panel">
                 <form #f="ngForm" (ngSubmit)="onSubmit(f)" novalidate>
@@ -28,8 +29,12 @@
                     <p>{{post['text']}}</p>
                     <p>Posted by {{post['poster-display-name']}} on <b>{{formatDate(post['datetime'])}}</b></p>
                     <!--Users can only delete posts that they have made-->
+                    <h4 class="text-success">Likes: {{post['likes']}}</h4>
                     <button *ngIf="post['poster-uid'] === userUID" (click)="removePost(post['$key'])"
-                            class="btn btn-sm btn-raised btn-successr">Delete Post
+                            class="btn btn-sm btn-raised">Delete Post
+                    </button>
+                    <button *ngIf="post['poster-uid'] !== userUID" (click)="likePost(post['$key'], post['poster-uid'])"
+                            class="btn btn-sm btn-raised btn-success">Like
                     </button>
                 </div>
             </div>

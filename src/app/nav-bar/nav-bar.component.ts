@@ -4,6 +4,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 
 import {AuthService} from '../providers/auth.service';
 import {Subscription} from 'rxjs/Subscription';
+import {AngularFireDatabase, FirebaseObjectObservable} from 'angularfire2/database';
 
 @Component({
     selector: 'app-nav-bar',
@@ -13,23 +14,34 @@ import {Subscription} from 'rxjs/Subscription';
 export class NavBarComponent implements OnInit, OnDestroy {
     private isLoggedIn: boolean;
     private routerSubscription: Subscription;
+    private likesSubscription: Subscription;
     private currentRoute: string;
     public navBarItems: Array<any>;
+    private likesObject: FirebaseObjectObservable<any>;
 
     constructor(public authService: AuthService, private apRef: ApplicationRef,
-                private router: Router, private route: ActivatedRoute) {
+                private router: Router, private route: ActivatedRoute, private db: AngularFireDatabase) {
     }
 
     ngOnInit() {
-        // TODO: Replace
+        this.authService.afAuth.auth.onAuthStateChanged((auth) => {
+            if (auth != null) {
+                this.likesObject = this.db.object('/likes/' + auth.uid);
+                this.likesSubscription = this.likesObject.subscribe((data) => {
+                    this.navBarItems[this.navBarItems.length - 1] = {
+                        text: 'Likes: ' + data.$value
+                    };
+                });
+            }
+        });
         this.navBarItems = [
             {
                 route: '',
                 text: 'Home'
             },
             {
-                route: 'text-posts',
-                text: 'Text Posts'
+                route: 'posts',
+                text: 'Posts'
             },
             {
                 route: 'friends',
@@ -42,6 +54,9 @@ export class NavBarComponent implements OnInit, OnDestroy {
             {
                 route: 'logout', // Not actual route - caught by 'navigateTo' function
                 text: 'Sign Out'
+            },
+            {
+                text: 'Likes: 0'
             }
         ];
 
@@ -66,7 +81,7 @@ export class NavBarComponent implements OnInit, OnDestroy {
     private navigateTo(route) {
         if (route === 'logout') {
             this.authService.logout();
-        } else {
+        } else if (route && route !== '') {
             this.router.navigate([route]);
         }
     }
@@ -74,6 +89,9 @@ export class NavBarComponent implements OnInit, OnDestroy {
     ngOnDestroy() {
         if (this.routerSubscription) {
             this.routerSubscription.unsubscribe();
+        }
+        if (this.likesSubscription) {
+            this.likesSubscription.unsubscribe();
         }
     }
 }
