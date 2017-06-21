@@ -36,8 +36,8 @@ export class NavBarComponent implements OnInit, OnDestroy {
                 text: 'Friends'
             },
             {
-                route: 'settings',
-                text: 'Settings'
+                route: 'profile',
+                text: 'Profile'
             },
             {
                 route: 'logout', // Not actual route - caught by 'navigateTo' function

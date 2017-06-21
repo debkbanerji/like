@@ -27,7 +27,7 @@ const routes: Routes = [ // Array of all routes - modify when adding routes //TO
     {path: '', component: HomePageComponent}, // Default route
     {path: 'login', component: LoginPageComponent},
     {path: 'text-posts', component: TextPostsComponent},
-    {path: 'settings', component: SettingsComponent},
+    {path: 'profile', component: SettingsComponent},
     {path: 'friends', component: FriendsComponent},
     {path: 'add-friends', component: AddFriendsComponent},
     {path: 'friend-requests', component: FriendRequestsComponent},
