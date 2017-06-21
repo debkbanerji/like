@@ -14,6 +14,7 @@ import {Subscription} from 'rxjs/Subscription';
 })
 export class LoginPageComponent implements OnInit, OnDestroy {
     private userDataSubscription: Subscription;
+    private likeSubscription: Subscription;
     public LOGO_URL: string;
 
     constructor(public authService: AuthService, private db: AngularFireDatabase, private router: Router) {
@@ -28,14 +29,20 @@ export class LoginPageComponent implements OnInit, OnDestroy {
         this.authService.loginWithGoogle().then((loginData) => {
             this.authService.afAuth.auth.onAuthStateChanged((auth) => {
                 if (auth != null) {
-                    const userObject = this.db.object('/user-profiles/' + auth.uid);
-                    userObject.set({
-                        'uid': auth.uid,
-                        'email': auth.email,
-                        'display-name': auth.displayName,
-                        'photo-url': auth.photoURL
-                    }).then(_ => {
-                        this.router.navigate(['']);
+                    const likeObject = this.db.object('/likes/' + auth.uid);
+                    this.likeSubscription = likeObject.subscribe((data) => {
+                        if (!data.$value) {
+                            likeObject.set(10);
+                        }
+                        const userObject = this.db.object('/user-profiles/' + auth.uid);
+                        userObject.set({
+                            'uid': auth.uid,
+                            'email': auth.email,
+                            'display-name': auth.displayName,
+                            'photo-url': auth.photoURL
+                        }).then(_ => {
+                            this.router.navigate(['']);
+                        });
                     });
                 }
             });
@@ -45,6 +52,9 @@ export class LoginPageComponent implements OnInit, OnDestroy {
     ngOnDestroy() {
         if (this.userDataSubscription) {
             this.userDataSubscription.unsubscribe();
+        }
+        if (this.likeSubscription) {
+            this.likeSubscription.unsubscribe();
         }
     }
 }
