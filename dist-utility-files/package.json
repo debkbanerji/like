@@ -1,0 +1,16 @@
+
+{
+    "name": "like",
+    "version": "0.0.0",
+    "description": "A social network where every 'like' has value.",
+    "main": "server.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start": "node server.js"
+    },
+    "author": "Deb Banerji",
+    "license": "MIT",
+    "dependencies": {
+        "express": "^4.14.0"
+    }
+}

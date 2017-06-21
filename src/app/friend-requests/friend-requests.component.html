@@ -1,0 +1,45 @@
+<app-nav-bar></app-nav-bar>
+<div class="row">
+    <div class="col-xs-6">
+        <div class="container-fluid">
+            <div class="panel">
+                <button class="btn btn-raised btn-info" (click)="navigateTo('add-friends')">
+                    Add Friends
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-6">
+        <div class="container-fluid">
+            <div class="panel">
+                <button class="btn btn-raised btn-info" (click)="navigateTo('friends')">
+                    Show Friends
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-12">
+        <div class="container-fluid">
+            <div class="panel">
+                <h1>Friend Requests</h1>
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-12">
+        <div class="container-fluid">
+            <div *ngFor="let request of requestsArray | async | orderBy: 'time-sent' | reverse">
+                <div class="panel">
+                    <h2>{{request['display-name']}}</h2>
+                    <b>Email: {{request['email']}}</b>
+                    <button class="btn btn-raised btn-success btn-sm" (click)="acceptRequest(request)">Accept</button>
+                </div>
+            </div>
+            <div *ngIf="canLoadMoreData" class="panel">
+                <button id="load-more-posts" class="btn btn-raised btn-info" (click)="tryToLoadMoreData()">
+                    Show More Friend Requests
+                </button>
+            </div>
+            <h3 id="no-more-posts-text" *ngIf="!canLoadMoreData">Showing All Friend Requests</h3>
+        </div>
+    </div>
+</div>

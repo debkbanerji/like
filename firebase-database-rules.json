@@ -1,0 +1,59 @@
+{
+    "rules": {
+        "text-posts": {
+            "num-posts": {
+                ".read": "auth != null",
+                ".write": "auth != null"
+            },
+            "posts": {
+                ".read": "auth != null",
+                ".indexOn": "datetime",
+                "$id": {
+                    ".write": "auth !== null && (!data.exists() || data.child('poster-uid').val() === auth.uid)"
+                }
+            }
+        },
+        "user-profiles": {
+            ".read": "auth !== null",
+            ".indexOn": "email",
+            "$id": {
+                ".read": "auth !== null",
+                ".write": "auth !== null && (!data.exists() || data.child('uid').val() === auth.uid)"
+            }
+        },
+        "friend-lists": {
+            "$userID": {
+                ".indexOn": "last-interacted",
+                ".read": "auth !== null && auth.uid === $userID",
+                ".write": "auth !== null && auth.uid === $userID",
+                "$friendID": {
+                    ".read": "auth !== null && (auth.uid === $userID)",
+                    ".write": "auth !== null && (!data.exists() || (auth.uid === $userID))"
+                }
+            }
+        },
+        "chats": {
+            "$chatID": {
+                "messages": {
+                    ".indexOn": "post-time"
+                },
+                ".read": "!data.exists() || (auth !==null  && (auth.uid === data.child('uid1').val() || auth.uid === data.child('uid2').val()))",
+                ".write": "!data.exists() || (auth !==null  && (auth.uid === data.child('uid1').val() || auth.uid === data.child('uid2').val()))"
+            }
+        },
+        "friend-requests": {
+            "$userID": {
+                ".indexOn": "time-sent",
+                ".read": "auth !== null",
+                "$friendID": {
+                    ".read": "auth !== null && (auth.uid === $userID || auth.uid === $friendID)",
+                    ".write": "auth !== null && (!data.exists() || (auth.uid === $userID || auth.uid === $friendID))"
+                }
+            }
+        },
+        "likes": {
+            ".read": "auth !== null",
+            ".write": "auth !== null"
+        }
+    }
+}

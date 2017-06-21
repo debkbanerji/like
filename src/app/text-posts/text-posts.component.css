@@ -1,0 +1,15 @@
+.panel {
+    padding: 5px;
+    padding-left: 10px;
+    padding-right: 10px
+}
+
+#load-more-posts {
+    width: 100%;
+}
+
+#no-more-posts-text {
+    padding: 5px;
+    padding-left: 10px;
+    padding-right: 10px
+}

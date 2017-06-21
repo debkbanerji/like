@@ -1,0 +1,43 @@
+<app-nav-bar></app-nav-bar>
+<div class="row">
+    <div class="col-xs-6">
+        <div class="container-fluid">
+            <div class="panel">
+                <button class="btn btn-raised btn-info" (click)="navigateTo('friends')">
+                    Show Friends
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-6">
+        <div class="container-fluid">
+            <div class="panel">
+                <button class="btn btn-raised btn-info" (click)="navigateTo('friend-requests')">
+                    Requests
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-12">
+        <div class="container-fluid">
+            <div class="panel">
+                <h1>Add Friends</h1>
+                <form #f="ngForm" (ngSubmit)="onSearch(f)" novalidate>
+                    <input name="email" ngModel required #first="ngModel" placeholder="Friend's email address"
+                           class="form-control" type="email">
+                    <button class="btn btn-raised btn-info">Search</button>
+                </form>
+            </div>
+            <div *ngFor="let user of searchResults | async">
+                <div class="panel">
+                    <h2>{{user['display-name']}}</h2>
+                    <b>Email: {{user['email']}}</b>
+                    <button class="btn btn-raised btn-success btn-sm" (click)="sendFriendRequest(user['uid'])">
+                        Add Friend
+                    </button>
+                </div>
+            </div>
+            <h3 id="search-text">{{searchText}}</h3>
+        </div>
+    </div>
+</div>

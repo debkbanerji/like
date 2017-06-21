@@ -1,0 +1,46 @@
+<app-nav-bar></app-nav-bar>
+<div class="row">
+    <div *ngIf="friendDisplayName" class="col-xs-12">
+        <div class="container-fluid">
+            <div class="panel" style="white-space:nowrap">
+                <img src="{{friendPhotoURL}}" class="img-circle friend-photo">
+                <h3 class="friend-name">{{friendDisplayName}}</h3>
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-12">
+        <div class="container-fluid">
+            <div class="panel">
+                <div *ngIf="!shouldDeleteOldMessages">
+                    <button *ngIf="canLoadMoreData" id="load-more-messages" class="btn btn-info"
+                            (click)="tryToLoadMoreData()">
+                        Show More Messages
+                    </button>
+                    <h4 id="no-more-messages-text" *ngIf="!canLoadMoreData">Showing All Messages</h4>
+                </div>
+                <div *ngFor="let message of messageListArray | async | orderBy: 'post-time'">
+                    <p [ngClass]="{'user-message': message['poster-uid'] === userUID,'friend-message': !(message['poster-uid'] === userUID)}">
+                        {{message['text']}}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-12">
+        <div class="container-fluid">
+            <div class="panel">
+                <form #f="ngForm" (ngSubmit)="sendMessage(f)" novalidate>
+                    <!--<div class="form-group">-->
+                    <div class="input-group">
+                        <input name="text" ngModel required #first="ngModel" placeholder="Type a message..."
+                               class="form-control">
+                        <span class="input-group-btn">
+                            <button class="btn btn-sm btn-raised btn-success"><i class="glyphicon glyphicon-send"></i>
+                            </button>
+                        </span>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

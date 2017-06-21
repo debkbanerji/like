@@ -1,0 +1,19 @@
+.panel {
+    padding: 5px;
+    padding-left: 10px;
+    padding-right: 10px
+}
+
+#load-more-requests {
+    width: 100%;
+}
+
+#no-more-requests-text {
+    padding: 5px;
+    padding-left: 10px;
+    padding-right: 10px
+}
+
+.btn {
+    width: 100%;
+}

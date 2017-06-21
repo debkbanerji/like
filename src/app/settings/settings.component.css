@@ -1,0 +1,17 @@
+.panel {
+    padding: 5px;
+    padding-left: 10px
+}
+
+.user-data {
+    margin: 2px;
+}
+
+.user-photo {
+    border-radius: 10%;
+}
+
+.user-photo-panel {
+    display: inline-block;
+    padding: 10px;
+}
