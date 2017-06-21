@@ -3,7 +3,7 @@
     <div class="col-xs-6">
         <div class="container-fluid">
             <div class="panel">
-                <button class="btn btn-raised btn-info" (click)="navigateTo('add-friends')">
+                <button class="btn btn-raised btn-success" (click)="navigateTo('add-friends')">
                     Add Friends
                 </button>
             </div>
@@ -12,7 +12,7 @@
     <div class="col-xs-6">
         <div class="container-fluid">
             <div class="panel">
-                <button class="btn btn-raised btn-info" (click)="navigateTo('friends')">
+                <button class="btn btn-raised btn-success" (click)="navigateTo('friends')">
                     Show Friends
                 </button>
             </div>
@@ -35,7 +35,7 @@
                 </div>
             </div>
             <div *ngIf="canLoadMoreData" class="panel">
-                <button id="load-more-posts" class="btn btn-raised btn-info" (click)="tryToLoadMoreData()">
+                <button id="load-more-posts" class="btn btn-raised btn-success" (click)="tryToLoadMoreData()">
                     Show More Friend Requests
                 </button>
             </div>

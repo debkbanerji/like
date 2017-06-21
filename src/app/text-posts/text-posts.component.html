@@ -29,12 +29,12 @@
                     <p>Posted by {{post['poster-display-name']}} on <b>{{formatDate(post['datetime'])}}</b></p>
                     <!--Users can only delete posts that they have made-->
                     <button *ngIf="post['poster-uid'] === userUID" (click)="removePost(post['$key'])"
-                            class="btn btn-sm btn-raised btn-danger">Delete Post
+                            class="btn btn-sm btn-raised btn-successr">Delete Post
                     </button>
                 </div>
             </div>
             <div *ngIf="canLoadMoreData" class="panel">
-                <button id="load-more-posts" class="btn btn-raised btn-info" (click)="tryToLoadMoreData()">
+                <button id="load-more-posts" class="btn btn-raised btn-success" (click)="tryToLoadMoreData()">
                     Load More Posts
                 </button>
             </div>

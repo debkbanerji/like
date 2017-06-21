@@ -3,7 +3,7 @@
     <div class="col-xs-6">
         <div class="container-fluid">
             <div class="panel">
-                <button class="btn btn-raised btn-info" (click)="navigateTo('friends')">
+                <button class="btn btn-raised btn-success" (click)="navigateTo('friends')">
                     Show Friends
                 </button>
             </div>
@@ -12,7 +12,7 @@
     <div class="col-xs-6">
         <div class="container-fluid">
             <div class="panel">
-                <button class="btn btn-raised btn-info" (click)="navigateTo('friend-requests')">
+                <button class="btn btn-raised btn-success" (click)="navigateTo('friend-requests')">
                     Requests
                 </button>
             </div>
@@ -25,7 +25,7 @@
                 <form #f="ngForm" (ngSubmit)="onSearch(f)" novalidate>
                     <input name="email" ngModel required #first="ngModel" placeholder="Friend's email address"
                            class="form-control" type="email">
-                    <button class="btn btn-raised btn-info">Search</button>
+                    <button class="btn btn-raised btn-success">Search</button>
                 </form>
             </div>
             <div *ngFor="let user of searchResults | async">
