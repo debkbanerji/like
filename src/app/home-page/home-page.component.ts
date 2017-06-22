@@ -14,7 +14,7 @@ export class HomePageComponent implements OnInit {
     // private displayNameObject: FirebaseObjectObservable<any>;
     public displayName: string;
     public LOGO_URL: string;
-    private userLikesObject: FirebaseObjectObservable<any>;
+    public userLikesObject: FirebaseObjectObservable<any>;
 
     // constructor(public authService: AuthService, private db: AngularFireDatabase) {
     constructor(public authService: AuthService, private db: AngularFireDatabase) {

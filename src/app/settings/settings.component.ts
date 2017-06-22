@@ -17,7 +17,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
     public userEmail: string;
     public userDisplayName: string;
     public userPhotoURL: string;
-    private userLikesObject: FirebaseObjectObservable<any>;
+    public userLikesObject: FirebaseObjectObservable<any>;
 
     constructor(public authService: AuthService, private db: AngularFireDatabase) {
     }

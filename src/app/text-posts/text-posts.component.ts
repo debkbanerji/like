@@ -29,7 +29,7 @@ export class TextPostsComponent implements OnInit, OnDestroy {
     public submitText: String;
     private userDisplayName: String;
     private userUID: String;
-    private userLikesObject: FirebaseObjectObservable<any>;
+    public userLikesObject: FirebaseObjectObservable<any>;
     private userLikesSubscription: Subscription;
     private userLikes: number;
     // private displayNameObject: FirebaseObjectObservable<any>;
