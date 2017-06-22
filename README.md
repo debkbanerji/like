@@ -1,8 +1,8 @@
 # Like
 
-Like is social network where every like has value. Every day, across the world, millions of people like billions of posts. Liking a post has become such a common occurrence and such a large part of our culture that doing so has lost its value.
+Like is a social network where every like has value. Every day, across the world, millions of people like billions of posts. Liking a post has become such a common occurrence and such a large part of our culture that doing so has lost its value.
 
-When you first log into Like, you're given a limited number of likes to use, so you need to really think about which posts deserve your like.
+When you first log into Like, you're given a limited number of likes to use, so you need to really think about which posts deserve your likes.
 
 Fear not, however, as there is a way to get more likes. Every time someone likes one of your posts, you are given more likes, so you can like more posts!
 
