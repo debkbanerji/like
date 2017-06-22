@@ -10,6 +10,15 @@ By changing the way people treat likes, Like aims to change the way people inter
 
 Made with ♥ by Deb Banerji
 
+[Try out Like](http://like.debkbanerji.com/)
+
+## Screenshots
+
+![Like](/Screenshots/Like_0.png?raw=true)
+![Like](/Screenshots/Like_1.png?raw=true)
+![Like](/Screenshots/Like_2.png?raw=true)
+![Like](/Screenshots/Like_3.png?raw=true)
+
 ## Setup
 
 ### Dependencies
