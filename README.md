@@ -4,7 +4,7 @@ Like is social network where every like has value. Every day, across the world, 
 
 When you first log into Like, you're given a limited number of likes to use, so you need to really think about which posts deserve your like.
 
-Fear not, however, as there is a way to get more likes. Every time someone likes one of your posts, you are given another like.
+Fear not, however, as there is a way to get more likes. Every time someone likes one of your posts, you are given more likes, so you can like more posts!
 
 By changing the way people treat likes, Like aims to change the way people interact with one another.
 
