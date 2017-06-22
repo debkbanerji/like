@@ -6,7 +6,7 @@
                 <h1>Text Posts</h1>
                 <!--<h3>Total number of posts: {{ (numPostsObject | async)?.$value }}</h3>-->
                 <!--<h3>Total number of posts: {{ numPosts }}</h3>-->
-                <h3>Likes: {{ (userLikesObject | async)?.$value }} {{userLikes}}</h3>
+                <h3>Your Likes: {{ (userLikesObject | async)?.$value }}</h3>
             </div>
             <div class="panel">
                 <form #f="ngForm" (ngSubmit)="onSubmit(f)" novalidate>

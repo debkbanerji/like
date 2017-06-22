@@ -17,6 +17,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
     public userEmail: string;
     public userDisplayName: string;
     public userPhotoURL: string;
+    private userLikesObject: FirebaseObjectObservable<any>;
 
     constructor(public authService: AuthService, private db: AngularFireDatabase) {
     }
@@ -28,6 +29,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
                     this.userEmail = data['email'];
                     this.userDisplayName = data['display-name'];
                     this.userPhotoURL = data['photo-url'];
+                    this.userLikesObject = this.db.object('/likes/' + auth.uid);
                 });
             }
         });

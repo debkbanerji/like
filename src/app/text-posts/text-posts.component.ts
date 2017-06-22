@@ -26,12 +26,11 @@ export class TextPostsComponent implements OnInit, OnDestroy {
     public canLoadMoreData: boolean;
     private lastKeySubscription: Subscription;
     private postSubscription: Subscription;
-
     public submitText: String;
     private userDisplayName: String;
     private userUID: String;
-    private userLikesSubscription: Subscription;
     private userLikesObject: FirebaseObjectObservable<any>;
+    private userLikesSubscription: Subscription;
     private userLikes: number;
     // private displayNameObject: FirebaseObjectObservable<any>;
     // private userDataSubscription: Subscription;
@@ -72,11 +71,6 @@ export class TextPostsComponent implements OnInit, OnDestroy {
             }
         });
 
-        this.userLikesObject = this.db.object('/likes/' + this.userUID);
-        this.userLikesSubscription = this.userLikesObject.subscribe((data) => {
-            this.userLikes = data.$value;
-        });
-
 
         this.postsArray = this.db.list(this.feedLocation + '/posts', {
             query: {
@@ -100,6 +94,10 @@ export class TextPostsComponent implements OnInit, OnDestroy {
                 // logged in
                 this.userDisplayName = auth.displayName;
                 this.userUID = auth.uid;
+                this.userLikesObject = this.db.object('/likes/' + this.userUID);
+                this.userLikesSubscription = this.userLikesObject.subscribe((data) => {
+                    this.userLikes = data.$value;
+                });
                 // if (auth != null) {
                 //     this.displayNameObject = this.db.object('/user-profiles/' + auth.uid + '/display-name');
                 //     this.userDataSubscription = this.displayNameObject.subscribe((data) => {

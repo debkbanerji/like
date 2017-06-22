@@ -14,7 +14,7 @@ import {AngularFireDatabase, FirebaseObjectObservable} from 'angularfire2/databa
 export class NavBarComponent implements OnInit, OnDestroy {
     private isLoggedIn: boolean;
     private routerSubscription: Subscription;
-    private likesSubscription: Subscription;
+    // private likesSubscription: Subscription;
     private currentRoute: string;
     public navBarItems: Array<any>;
     private likesObject: FirebaseObjectObservable<any>;
@@ -27,16 +27,16 @@ export class NavBarComponent implements OnInit, OnDestroy {
         this.authService.afAuth.auth.onAuthStateChanged((auth) => {
             if (auth != null) {
                 this.likesObject = this.db.object('/likes/' + auth.uid);
-                this.likesSubscription = this.likesObject.subscribe((data) => {
-                    this.navBarItems[this.navBarItems.length - 1] = {
-                        text: 'Likes: ' + data.$value
-                    };
-                });
+                // this.likesSubscription = this.likesObject.subscribe((data) => {
+                //     this.navBarItems[this.navBarItems.length - 1] = {
+                //         text: 'Likes: ' + data.$value
+                //     };
+                // });
             }
         });
         this.navBarItems = [
             {
-                route: '',
+                route: 'home',
                 text: 'Home'
             },
             {
@@ -54,9 +54,6 @@ export class NavBarComponent implements OnInit, OnDestroy {
             {
                 route: 'logout', // Not actual route - caught by 'navigateTo' function
                 text: 'Sign Out'
-            },
-            {
-                text: 'Likes: 0'
             }
         ];
 
@@ -69,7 +66,7 @@ export class NavBarComponent implements OnInit, OnDestroy {
             if (url[0]) {
                 this.currentRoute = url[0].path;
             } else {
-                this.currentRoute = '';
+                this.currentRoute = 'home';
             }
         });
     }
@@ -79,10 +76,15 @@ export class NavBarComponent implements OnInit, OnDestroy {
     }
 
     private navigateTo(route) {
-        if (route === 'logout') {
-            this.authService.logout();
-        } else if (route && route !== '') {
-            this.router.navigate([route]);
+        if (route !== 'likes') {
+            if (route === 'home') {
+                route = '';
+            }
+            if (route === 'logout') {
+                this.authService.logout();
+            } else {
+                this.router.navigate([route]);
+            }
         }
     }
 
@@ -90,8 +92,8 @@ export class NavBarComponent implements OnInit, OnDestroy {
         if (this.routerSubscription) {
             this.routerSubscription.unsubscribe();
         }
-        if (this.likesSubscription) {
-            this.likesSubscription.unsubscribe();
-        }
+        // if (this.likesSubscription) {
+        //     this.likesSubscription.unsubscribe();
+        // }
     }
 }

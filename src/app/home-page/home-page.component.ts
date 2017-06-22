@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 
 import {AuthService} from '../providers/auth.service';
+import {AngularFireDatabase, FirebaseObjectObservable} from 'angularfire2/database';
 // import {AngularFireDatabase, FirebaseObjectObservable} from 'angularfire2/database';
 
 @Component({
@@ -13,9 +14,10 @@ export class HomePageComponent implements OnInit {
     // private displayNameObject: FirebaseObjectObservable<any>;
     public displayName: string;
     public LOGO_URL: string;
+    private userLikesObject: FirebaseObjectObservable<any>;
 
     // constructor(public authService: AuthService, private db: AngularFireDatabase) {
-    constructor(public authService: AuthService) {
+    constructor(public authService: AuthService, private db: AngularFireDatabase) {
     }
 
     ngOnInit() {
@@ -25,6 +27,7 @@ export class HomePageComponent implements OnInit {
             if (auth != null) {
                 this.displayName = auth.displayName;
                 // this.displayNameObject = this.db.object('/user-profiles/' + auth.uid + '/display-name');
+                this.userLikesObject = this.db.object('/likes/' + auth.uid);
             }
         });
     }
