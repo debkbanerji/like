@@ -70,7 +70,7 @@ For faster (albeit less secure) development, you can also replace the rules with
 
 ## Starting The Application in a Development Environment
 
-You can start a development server by running `npm start` and navigating to `http://localhost:4200/` The app will automatically reload if you change any of the source files.
+You can start a development server by running `npm develop` and navigating to `http://localhost:4200/` The app will automatically reload if you change any of the source files.
 Note that this is simply a wrapper around `ng serve`.
 
 ## Building The Application
